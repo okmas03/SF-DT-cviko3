@@ -42,3 +42,20 @@ python main.py
 - `CASH_ADVANCE_FREQUENCY` má maximum 1,5, hoci ide o frekvenciu v rozsahu 0–1, čo je chyba v dátach.
 
 ![Rozdelenie peňažných atribútov](figures/01_distribuce.png)
+
+### 2. Výber atribútov a predspracovanie
+
+Pre clustering sme ponechali 10 atribútov: `BALANCE`, `PURCHASES`, `ONEOFF_PURCHASES`,
+`INSTALLMENTS_PURCHASES`, `CASH_ADVANCE`, `PURCHASES_FREQUENCY`, `CASH_ADVANCE_FREQUENCY`,
+`CREDIT_LIMIT`, `PAYMENTS`, `PRC_FULL_PAYMENT`. Vyradené boli identifikátor, redundantné atribúty
+(počty transakcií, čiastkové frekvencie), takmer konštantné atribúty (`TENURE`, `BALANCE_FREQUENCY`)
+a `MINIMUM_PAYMENTS` (chýbajúce hodnoty).
+
+Predspracovanie:
+1. chýbajúci `CREDIT_LIMIT` doplnený mediánom,
+2. `CASH_ADVANCE_FREQUENCY` orezaná na maximum 1,
+3. peňažné atribúty transformované `log(1 + x)` kvôli zošikmenosti,
+4. štandardizácia (z-score), aby mali všetky atribúty v Euklidovskej vzdialenosti rovnakú váhu.
+
+![Korelácia](figures/02_korelacia.png)
+![Transformácia](figures/03_transformacia.png)
