@@ -59,3 +59,19 @@ Predspracovanie:
 
 ![Korelácia](figures/02_korelacia.png)
 ![Transformácia](figures/03_transformacia.png)
+
+### 3. K-Means
+
+K-Means s Euklidovskou vzdialenosťou (`n_init=10`, `random_state=42`). Počet clusterov K bol
+zvolený podľa silhouette score pre K = 2–10:
+
+| K | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|---|---|---|---|---|---|---|---|---|---|
+| silueta | **0,278** | 0,242 | 0,248 | 0,240 | 0,249 | *0,259* | 0,253 | 0,235 | 0,237 |
+
+- Maximum siluety je pri **K = 2** (0,278). Vzniknú clustery s 5 924 a 3 026 používateľmi.
+- Lokálne maximum je pri **K = 7** (0,259). Toto rozdelenie použijeme pre jemnejšiu segmentáciu.
+- Nízke hodnoty siluety (≈ 0,25) naznačujú, že dáta netvoria ostro oddelené zhluky, ale skôr
+  spojité kontinuum používateľov s plynulými prechodmi.
+
+![Voľba K](figures/04_kmeans_silueta.png)
