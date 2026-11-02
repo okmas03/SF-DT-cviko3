@@ -6,6 +6,9 @@ FIG_DIR = ROOT / "figures"
 FIG_DIR.mkdir(exist_ok=True)
 
 RANDOM_STATE = 42
+MIN_PTS_FACTOR = 2 
+K_RANGE = range(2, 11)  # rozsah pre KMeans
+K_FINE = 7   # lokálne maximum siluety – jemnejšia segmentácia
 
 FEATURES = [
     "BALANCE", "PURCHASES", "ONEOFF_PURCHASES", "INSTALLMENTS_PURCHASES", "CASH_ADVANCE",
@@ -17,10 +20,6 @@ MONEY = [
     "BALANCE", "PURCHASES", "ONEOFF_PURCHASES", "INSTALLMENTS_PURCHASES", "CASH_ADVANCE",
     "CREDIT_LIMIT", "PAYMENTS",
 ]
-
-K_RANGE = range(2, 11)  # rozsah pre KMeans
-
-K_FINE = 7   # lokálne maximum siluety – jemnejšia segmentácia
 
 # pevné poradie farieb clusterov (bezpečné aj pre farbosleposť), šum = sivá
 PALETTE = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"]
@@ -40,3 +39,5 @@ NAMES_KM7 = {
     5: "Príležitostní nakupujúci",
     6: "Transactors / rich savers",
 }
+
+NAMES_DB = {0: "Hlavný zhluk"}

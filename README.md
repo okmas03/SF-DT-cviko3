@@ -88,3 +88,15 @@ Hotovostní dlžníci pochádzajú výhradne z clustera „Používatelia hotovo
 transactors a drobní splátkoví nakupujúci z clustera „Nakupujúci“. Revolveri, ktorí nakupujú
 aj vyberajú hotovosť, ležia na hranici a K=2 ich rozdelí približne napoly. Ilustruje to
 vlastnosť K-Means: každý bod musí byť priradený do niektorého clustera, aj keď leží medzi nimi.
+
+Šum (15 používateľov) tvoria dva typy extrémov:
+
+- **Aktívni, ale nesplácajúci (10)**: majú zostatok, nakupujú alebo vyberajú hotovosť, ale
+  `PAYMENTS = 0`. Nulové platby majú inak iba neaktívni používatelia, preto je táto kombinácia
+  vzácna. Z pohľadu banky ide o najrizikovejších klientov.
+- **Nezvyčajné kombinácie a nekonzistentné dáta (5)**: napr. používateľ s kreditným limitom 50
+  a výbermi hotovosti 5 677 (C17140), alebo používateľ, ktorého nákupy na splátky prevyšujú
+  celkové nákupy (C11506). Ide pravdepodobne o chyby v dátach.
+
+Identifikácia týchto extrémov je výhodou DBSCAN oproti K-Means, ktorý musí každého používateľa
+priradiť do niektorého clustera.
