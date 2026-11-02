@@ -6,6 +6,8 @@ from src.preprocessing import preprocess
 from src.kmeans import kmeans_analysis, run_kmeans
 from src.profiling import describe_clusters
 from src.dbscan import dbscan_analysis
+from src.config import K_FINE, NAMES_KM2, NAMES_KM7, NAMES_DB, NAMES_DB_ALT, FEATURES, EPS_GRID, EPS_ALT
+from src.dbscan import dbscan_analysis, eps_sensitivity, plot_eps_sensitivity, run_dbscan
 
 
 def main():
@@ -30,6 +32,16 @@ def main():
 
     print("\nOutliery (šum) podľa DBSCAN:")
     print(df.loc[labels_db == -1, ["CUST_ID"] + FEATURES].round(2).to_string())
+
+    # DBSCAN – citlivosť na Eps
+    print("\nCitlivosť DBSCAN na Eps (MinPts = 20):")
+    sens = eps_sensitivity(Z, min_pts, EPS_GRID)
+    print(sens.to_string(index=False))
+    plot_eps_sensitivity(sens)
+
+    labels_db_alt = run_dbscan(Z, EPS_ALT, min_pts)
+    describe_clusters(data, Z, labels_db_alt, NAMES_DB_ALT,
+                      f"DBSCAN Eps={EPS_ALT}, MinPts={min_pts}", "10_dbscan_eps1")
 
 
 if __name__ == "__main__":

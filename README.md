@@ -100,3 +100,33 @@ vlastnosť K-Means: každý bod musí byť priradený do niektorého clustera, a
 
 Identifikácia týchto extrémov je výhodou DBSCAN oproti K-Means, ktorý musí každého používateľa
 priradiť do niektorého clustera.
+
+
+#### Citlivosť na Eps
+
+Lakeť k-distance grafu je heuristika. Pri Eps ≈ 2,28 sa husté oblasti pospájajú do jedného
+clustera, preto sme pri MinPts = 20 vyskúšali menšie hodnoty Eps:
+
+| Eps | clusterov | šum | silueta (bez šumu) | veľkosti clusterov |
+|---|---|---|---|---|
+| 0,8 | 7 | 39,6 % | 0,266 | 1735, 1344, 1275, 605, 243, 172, 32 |
+| 0,9 | 7 | 27,6 % | 0,169 | 3036, 1809, 711, 436, 357, 114, 14 |
+| **1,0** | **6** | **17,0 %** | **0,155** | **4794, 1855, 698, 30, 25, 24** |
+| 1,1 | 5 | 11,6 % | 0,184 | 5908, 1875, 64, 42, 22 |
+| 1,2 | 3 | 7,3 % | 0,254 | 8218, 52, 29 |
+| 1,4 | 4 | 3,6 % | 0,233 | 8490, 60, 56, 22 |
+| 1,6 | 3 | 1,9 % | 0,253 | 8607, 99, 70 |
+| 1,8 | 1 | 1,3 % | – | 8838 |
+| 2,0 | 1 | 0,5 % | – | 8906 |
+
+![Citlivosť na Eps](figures/09_dbscan_citlivost.png)
+
+Bolo zvolené **Eps = 1,0** ako kompromis medzi počtom clusterov a podielom šumu:
+pri menšom Eps je ako šum označených 28–40 % používateľov, pri Eps ≥ 1,2 patrí viac než 90 %
+používateľov do jedného clustera.
+
+Silueta nebola pri DBSCAN použitá ako kritérium výberu, pretože:
+- predpokladá kompaktné clustery okolo stredu, kým DBSCAN nachádza clustery ľubovoľného tvaru
+  (napr. pretiahnutý cluster „Bežní nakupujúci“ silueta penalizuje, hoci je hustotne korektný),
+- počíta sa bez bodov šumu, takže zvýhodňuje malé Eps, pri ktorých sa vynechá veľká časť dát
+  (pri Eps = 0,8 je silueta najvyššia, ale ignoruje 40 % používateľov).

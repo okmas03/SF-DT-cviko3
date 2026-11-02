@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import DBSCAN
 from sklearn.neighbors import NearestNeighbors
 from kneed import KneeLocator
+import pandas as pd
+from sklearn.metrics import silhouette_score
 
 from src.config import FIG_DIR, MIN_PTS_FACTOR
 
@@ -55,3 +57,38 @@ def dbscan_analysis(Z: np.ndarray) -> tuple[np.ndarray, float, int]:
     print(f"\nDBSCAN – MinPts = {min_pts}, Eps (lakeť) = {eps:.3f}")
     plot_k_distance(kdist, eps, knee_idx, min_pts)
     return run_dbscan(Z, eps, min_pts), eps, min_pts
+
+def eps_sensitivity(Z: np.ndarray, min_pts: int, eps_values: list[float]) -> pd.DataFrame:
+    """Pre rôzne Eps spočíta počet clusterov, šum a siluetu (bez bodov šumu)."""
+    rows = []
+    for eps in eps_values:
+        labels = DBSCAN(eps=eps, min_samples=min_pts).fit_predict(Z)
+        mask = labels != -1
+        n_clusters = len(set(labels[mask]))
+        sil = silhouette_score(Z[mask], labels[mask]) if n_clusters > 1 else np.nan
+        rows.append({
+            "Eps": eps,
+            "clusterov": n_clusters,
+            "šum": int((~mask).sum()),
+            "šum %": round((~mask).mean() * 100, 1),
+            "silueta (bez šumu)": round(sil, 3),
+            "veľkosti": sorted(np.bincount(labels[mask]).tolist(), reverse=True),
+        })
+    return pd.DataFrame(rows)
+
+
+def plot_eps_sensitivity(res: pd.DataFrame) -> None:
+    fig, ax = plt.subplots(1, 2, figsize=(13, 4))
+    ax[0].plot(res["Eps"], res["clusterov"], marker="o", lw=2, ms=7, color="#2a78d6")
+    ax[0].set_title("Počet clusterov podľa Eps")
+    ax[0].set_ylabel("clusterov")
+    ax[1].plot(res["Eps"], res["šum %"], marker="o", lw=2, ms=7, color="#2a78d6")
+    ax[1].set_title("Podiel šumu podľa Eps")
+    ax[1].set_ylabel("šum (%)")
+    for a in ax:
+        a.set_xlabel("Eps")
+        a.grid(alpha=0.3)
+    fig.tight_layout()
+    fig.savefig(FIG_DIR / "09_dbscan_citlivost.png", dpi=120)
+    plt.close(fig)
+

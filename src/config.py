@@ -9,6 +9,8 @@ RANDOM_STATE = 42
 MIN_PTS_FACTOR = 2 
 K_RANGE = range(2, 11)  # rozsah pre KMeans
 K_FINE = 7   # lokálne maximum siluety – jemnejšia segmentácia
+EPS_GRID = [0.8, 0.9, 1.0, 1.1, 1.2, 1.4, 1.6, 1.8, 2.0]
+EPS_ALT = 1.0
 
 FEATURES = [
     "BALANCE", "PURCHASES", "ONEOFF_PURCHASES", "INSTALLMENTS_PURCHASES", "CASH_ADVANCE",
@@ -41,3 +43,12 @@ NAMES_KM7 = {
 }
 
 NAMES_DB = {0: "Hlavný zhluk"}
+
+NAMES_DB_ALT = {
+    0: "Bežní nakupujúci",
+    1: "Hotovostní dlžníci",
+    2: "Revolveri – nákupy aj hotovosť",
+    3: "Hotovosť bez splácania",
+    4: "VIP – veľké nákupy, plne splácajú",
+    5: "Menšie nákupy, plne splácajú",
+}
