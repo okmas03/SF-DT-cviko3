@@ -9,7 +9,7 @@ def load_data() -> pd.DataFrame:
 
 
 def explore(df: pd.DataFrame) -> None:
-    print(f"Rozmer datasetu: {df.shape[0]} používateľov, {df.shape[1]} atributů\n")
+    print(f"Rozmer datasetu: {df.shape[0]} používateľov, {df.shape[1]} atribútov\n")
 
     missing = df.isna().sum()
     print("Chýbajúce hodnoty:")
@@ -19,13 +19,13 @@ def explore(df: pd.DataFrame) -> None:
     print("Základné štatistiky:")
     print(df.describe().T.round(2), "\n")
 
-    # rozdelenie peněžných atribútov
+    # rozdelenie peňažných atribútov
     cols = ["BALANCE", "PURCHASES", "CASH_ADVANCE", "CREDIT_LIMIT", "PAYMENTS"]
     fig, axes = plt.subplots(1, len(cols), figsize=(16, 3))
     for ax, c in zip(axes, cols):
         ax.hist(df[c].dropna(), bins=60, color="#2a78d6")
         ax.set_title(c, fontsize=9)
-    fig.suptitle("Rozdelenie peněžných atribútov (pôvodné hodnoty)")
+    fig.suptitle("Rozdelenie peňažných atribútov (pôvodné hodnoty)")
     fig.tight_layout()
     fig.savefig(FIG_DIR / "01_distribuce.png", dpi=120)
     plt.close(fig)

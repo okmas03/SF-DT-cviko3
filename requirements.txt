@@ -1,8 +1,8 @@
-pandas
-numpy
-scikit-learn
-scipy
-matplotlib
-seaborn
-kneed
-openpyxl
+pandas==3.0.5
+numpy==2.4.6
+scikit-learn==1.9.1
+scipy==1.18.0
+matplotlib==3.10.9
+seaborn==0.13.2
+kneed==0.9.0
+openpyxl==3.1.5

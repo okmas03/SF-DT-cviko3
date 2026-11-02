@@ -11,6 +11,8 @@ K_RANGE = range(2, 11)  # rozsah pre KMeans
 K_FINE = 7   # lokálne maximum siluety – jemnejšia segmentácia
 EPS_GRID = [0.8, 0.9, 1.0, 1.1, 1.2, 1.4, 1.6, 1.8, 2.0]
 EPS_ALT = 1.0
+K_WARD = 6   # lokálne maximum siluety pre Ward
+
 
 FEATURES = [
     "BALANCE", "PURCHASES", "ONEOFF_PURCHASES", "INSTALLMENTS_PURCHASES", "CASH_ADVANCE",
@@ -33,7 +35,7 @@ NAMES_KM2 = {
     1: "Používatelia hotovosti",
 }
 NAMES_KM7 = {
-    0: "Neaktívni",
+    0: "Bez platieb (väčšinou neaktívni)",
     1: "Drobní splátkoví nakupujúci",
     2: "Revolveri – nákupy aj hotovosť",
     3: "Hotovostní dlžníci",
@@ -51,4 +53,13 @@ NAMES_DB_ALT = {
     3: "Hotovosť bez splácania",
     4: "VIP – veľké nákupy, plne splácajú",
     5: "Menšie nákupy, plne splácajú",
+}
+
+NAMES_WARD = {
+    0: "Hotovostní dlžníci",
+    1: "Transactors / rich savers",
+    2: "Pravidelní nakupujúci",
+    3: "Revolveri – nákupy aj hotovosť",
+    4: "Bez platieb (väčšinou neaktívni)",
+    5: "Príležitostní nakupujúci",
 }
