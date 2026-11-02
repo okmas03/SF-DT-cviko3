@@ -75,3 +75,16 @@ zvolený podľa silhouette score pre K = 2–10:
   spojité kontinuum používateľov s plynulými prechodmi.
 
 ![Voľba K](figures/04_kmeans_silueta.png)
+
+
+**Vzťah K = 2 a K = 7**
+
+| K=2 \ K=7 | Drobní splátkoví | Heavy spenders | Hotovostní dlžníci | Neaktívni | Príležitostní | Revolveri | Transactors |
+|---|---|---|---|---|---|---|---|
+| Nakupujúci | 1 538 | 1 306 | 0 | 177 | 1 027 | 816 | 1 060 |
+| Používatelia hotovosti | 17 | 0 | 2 070 | 114 | 231 | 586 | 8 |
+
+Hotovostní dlžníci pochádzajú výhradne z clustera „Používatelia hotovosti“; heavy spenders,
+transactors a drobní splátkoví nakupujúci z clustera „Nakupujúci“. Revolveri, ktorí nakupujú
+aj vyberajú hotovosť, ležia na hranici a K=2 ich rozdelí približne napoly. Ilustruje to
+vlastnosť K-Means: každý bod musí byť priradený do niektorého clustera, aj keď leží medzi nimi.

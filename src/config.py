@@ -19,3 +19,24 @@ MONEY = [
 ]
 
 K_RANGE = range(2, 11)  # rozsah pre KMeans
+
+K_FINE = 7   # lokálne maximum siluety – jemnejšia segmentácia
+
+# pevné poradie farieb clusterov (bezpečné aj pre farbosleposť), šum = sivá
+PALETTE = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"]
+NOISE_COLOR = "#9a9a96"
+
+# názvy clusterov – určené podľa profilov (viď README)
+NAMES_KM2 = {
+    0: "Nakupujúci",
+    1: "Používatelia hotovosti",
+}
+NAMES_KM7 = {
+    0: "Neaktívni",
+    1: "Drobní splátkoví nakupujúci",
+    2: "Revolveri – nákupy aj hotovosť",
+    3: "Hotovostní dlžníci",
+    4: "Heavy spenders",
+    5: "Príležitostní nakupujúci",
+    6: "Transactors / rich savers",
+}
